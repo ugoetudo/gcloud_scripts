@@ -1,0 +1,68 @@
+/etc/apt/sources.list.d/google-cloud-logging.list
+/etc/apt/sources.list.d/google-cloud-monitoring.list
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  1022  100  1022    0     0  31870      0 --:--:-- --:--:-- --:--:-- 32967
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  3479    0  3479    0     0  13404      0 --:--:-- --:--:-- --:--:-- 13432
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100  5575    0  5575    0     0  21854      0 --:--:-- --:--:-- --:--:-- 21862
+Service Hive server2 is not enabled
+[2026-03-24T23:15:38+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Stopping Hive metastore ...
+[2026-03-24T23:15:39+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Hive metastore stopped
+[2026-03-24T23:15:39+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Stopping and disabling mysql.service ...
+Synchronizing state of mysql.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable mysql
+[2026-03-24T23:15:41+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: mysql.service stopped and disabled
+Installing Cloud SQL Proxy ...
+2026-03-24 23:15:42 URL:https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.18.1/cloud-sql-proxy.linux.amd64 [36517239/36517239] -> "/tmp/cloud_sql_proxy.linux.amd64" [1]
+Using CloudSQL Proxy V2 - Version v2.18.1
+[2026-03-24T23:15:42+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Cloud SQL Proxy installation succeeded
+[2026-03-24T23:15:42+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Starting Cloud SQL proxy ...
+Created symlink /etc/systemd/system/multi-user.target.wants/cloud-sql-proxy.service → /usr/lib/systemd/system/cloud-sql-proxy.service.
+[2026-03-24T23:15:43+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: About to run 'nc -zv localhost 3306' with retries...
+nc: connect to localhost port 3306 (tcp) failed: Connection refused
+[2026-03-24T23:15:43+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: 'nc -zv localhost 3306' attempt 1 failed! Sleeping 1.
+Connection to localhost 3306 port [tcp/mysql] succeeded!
+[2026-03-24T23:15:44+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Cloud SQL Proxy started
+[2026-03-24T23:15:44+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Logs can be found in /var/log/cloud-sql-proxy/cloud-sql-proxy.log
+[2026-03-24T23:15:44+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: MySQL CLI is already installed
+[2026-03-24T23:15:44+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: About to run 'initialize_metastore_db' with retries...
+[2026-03-24T23:15:44+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Initialzing MYSQL DB for Hive metastore ...
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 2059 (HY000): Authentication plugin 'mysql_clear_password' cannot be loaded: plugin not enabled
+mysql: [Warning] Using a password on the command line interface can be insecure.
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1044 (42000) at line 1: Access denied for user 'hive'@'%' to database 'hive_metastore'
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 1007 (HY000) at line 1: Can't create database 'hive_metastore'; database exists
+Metastore connection URL:	 jdbc:mysql://localhost:3306/hive_metastore?allowPublicKeyRetrieval=true
+Metastore Connection Driver :	 com.mysql.jdbc.Driver
+Metastore connection User:	 hive
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+org.apache.hadoop.hive.metastore.HiveMetaException: Failed to get schema version.
+Underlying cause: java.sql.SQLSyntaxErrorException : Access denied for user 'hive'@'%' to database 'hive_metastore'
+SQL Error code: 1044
+Use --verbose for detailed stacktrace.
+*** schemaTool failed ***
+[2026-03-24T23:15:48+0000] [etudo-hive-cluster-v2-sp26-m]: ERROR: Failed to set mysql schema.
+[2026-03-24T23:15:48+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: MYSQL DB initialized for Hive metastore
+[2026-03-24T23:15:48+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Restarting Hive metastore ...
+[2026-03-24T23:15:51+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Hive metastore restarted
+Service Hive server2 is not enabled
+[2026-03-24T23:15:51+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: About to run 'run_validation' with retries...
+[2026-03-24T23:15:51+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Validating Hive is running...
+Metastore connection URL:	 jdbc:mysql://localhost:3306/hive_metastore?allowPublicKeyRetrieval=true
+Metastore Connection Driver :	 com.mysql.jdbc.Driver
+Metastore connection User:	 hive
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+org.apache.hadoop.hive.metastore.HiveMetaException: Failed to get schema version.
+Underlying cause: java.sql.SQLSyntaxErrorException : Access denied for user 'hive'@'%' to database 'hive_metastore'
+SQL Error code: 1044
+Use --verbose for detailed stacktrace.
+*** schemaTool failed ***
+[2026-03-24T23:15:59+0000] [etudo-hive-cluster-v2-sp26-m]: ERROR: Run /usr/lib/hive/bin/schematool -dbType ${CLOUDSQL_INSTANCE_TYPE,,} -upgradeSchemaFrom <schema-version> to upgrade the schema. Note that this may break Hive metastores that depend on the old schema
+[2026-03-24T23:15:59+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: Validated Hive functioning
+[2026-03-24T23:15:59+0000] [etudo-hive-cluster-v2-sp26-m]: INFO: All done
