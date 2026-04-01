@@ -11,3 +11,5 @@ echo "your password here" | gcloud kms encrypt \
 --plaintext-file=- \
 --ciphertext-file=hive-admin-password.encrypted
 gcloud storage cp *.encrypted gs://your-bucket-of-keys/
+
+# please take note of the file names in the --ciphertext-file flags above
