@@ -10,4 +10,4 @@ echo "your password here" | gcloud kms encrypt \
 --key=hive-db-key-v1 \
 --plaintext-file=- \
 --ciphertext-file=hive-admin-password.encrypted
-gcloud storage cp *.encrypted gs://etudo-bda-keys/
+gcloud storage cp *.encrypted gs://your-bucket-of-keys/
