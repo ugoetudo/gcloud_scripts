@@ -28,7 +28,7 @@ WITH SERDEPROPERTIES (
     "quoteChar"     = "'",
     "escapeChar"    = "\\" 
 )
-LOCATION 'gs://etudo-bda-2026/empsal_raw/'
+LOCATION 'gs://YOUR_STORAGE_BUCKET/empsal_raw/'
 ;
 ```
 
@@ -38,7 +38,7 @@ When creating a new partitioned table in Hive, your are met with some challenges
 Here is how you'd do that:
 
 ```sql
-INSERT OVERWRITE DIRECTORY 'gs://etudo-bda-2026/emp_sal_staging/'
+INSERT OVERWRITE DIRECTORY 'gs://YOUR_STORAGE_BUCKET/emp_sal_staging/'
 ROW FORMAT SERDE 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
 WITH SERDEPROPERTIES (
     "separatorChar" = ",",
@@ -53,7 +53,7 @@ Note the SELECT list... compare to the salaries_titles table definition.
 ```sh
 # Examine the contents of this output directory
 
-gcloud storage ls 'gs://etudo-bda-2026/emp_sal_staging/'
+gcloud storage ls 'gs://YOUR_STORAGE_BUCKET/emp_sal_staging/'
 ```
 
 ## Create a partitioned version of the salaries_titles table
@@ -92,13 +92,13 @@ pure copy/move operations that move datafiles into locations corresponding to Hi
 
 To achieve this we'll write:
 ```sql
-LOAD DATA INPATH 'gs://etudo-bda-2026/empsal_raw/' INTO TABLE partitioned_salaries_titles;
+LOAD DATA INPATH 'gs://YOUR_STORAGE_BUCKET/empsal_raw/' INTO TABLE partitioned_salaries_titles;
 ```
 
 If this works, try, from any terminal with gcloud initialized:
 
 ```sh
-gcloud storage ls gs://etudo-bda-2026/hive-warehouse/employees.db/partitioned_salaries_titles
+gcloud storage ls gs://YOUR_STORAGE_BUCKET/hive-warehouse/employees.db/partitioned_salaries_titles
 ```
 
 In beeline try: 
